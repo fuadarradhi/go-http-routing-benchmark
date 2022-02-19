@@ -13,6 +13,7 @@ import (
 	"regexp"
 	"runtime"
 
+	"github.com/fuadarradhi/benchmark/jeen"
 	"github.com/go-chi/chi/v5"
 )
 
@@ -105,6 +106,63 @@ func loadChiSingle(method, path string, handler http.HandlerFunc) http.Handler {
 		panic("Unknown HTTP method: " + method)
 	}
 	return mux
+}
+
+// Jeen
+func jeenHandler(res *jeen.Resource) {}
+
+func jeenHandlerWrite(res *jeen.Resource) {
+	io.WriteString(res.Writer.Instance(), res.Request.URLParam("name"))
+}
+
+func jeenHandlerTest(res *jeen.Resource) {
+	io.WriteString(res.Writer.Instance(), res.Request.RequestURI())
+}
+
+func loadJeen(routes []route) http.Handler {
+	var h jeen.HandlerRouteFunc = jeenHandler
+	if loadTestHandler {
+		h = jeenHandlerTest
+	}
+
+	serv := jeen.InitServer(&jeen.Config{})
+	for _, r := range routes {
+		switch r.method {
+		case "GET":
+			serv.Get(r.path, h)
+		case "POST":
+			serv.Post(r.path, h)
+		case "PUT":
+			serv.Put(r.path, h)
+		case "PATCH":
+			serv.Patch(r.path, h)
+		case "DELETE":
+			serv.Delete(r.path, h)
+		default:
+			panic("Unknow HTTP method: " + r.method)
+		}
+	}
+
+	return serv.Handler()
+}
+
+func loadJeenSingle(method, path string, h jeen.HandlerRouteFunc) http.Handler {
+	serv := jeen.InitServer(&jeen.Config{})
+	switch method {
+	case "GET":
+		serv.Get(path, h)
+	case "POST":
+		serv.Post(path, h)
+	case "PUT":
+		serv.Put(path, h)
+	case "PATCH":
+		serv.Patch(path, h)
+	case "DELETE":
+		serv.Delete(path, h)
+	default:
+		panic("Unknow HTTP method: " + method)
+	}
+	return serv.Handler()
 }
 
 // Usage notice

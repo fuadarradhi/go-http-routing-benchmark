@@ -13,6 +13,7 @@ var (
 		load func(routes []route) http.Handler
 	}{
 		{"Chi", loadChi},
+		{"Jeen", loadJeen},
 	}
 
 	// all APIs

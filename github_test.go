@@ -238,7 +238,8 @@ var githubAPI = []route{
 }
 
 var (
-	githubChi http.Handler
+	githubChi  http.Handler
+	githubJeen http.Handler
 )
 
 func init() {
@@ -246,6 +247,10 @@ func init() {
 
 	calcMem("Chi", func() {
 		githubChi = loadChi(githubAPI)
+	})
+
+	calcMem("Jeen", func() {
+		githubJeen = loadChi(githubAPI)
 	})
 
 	println()
@@ -256,11 +261,25 @@ func BenchmarkChi_GithubStatic(b *testing.B) {
 	benchRequest(b, githubChi, req)
 }
 
+func BenchmarkJeen_GithubStatic(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/user/repos", nil)
+	benchRequest(b, githubJeen, req)
+}
+
 func BenchmarkChi_GithubParam(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/repos/julienschmidt/httprouter/stargazers", nil)
 	benchRequest(b, githubChi, req)
 }
 
+func BenchmarkJeen_GithubParam(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/repos/julienschmidt/httprouter/stargazers", nil)
+	benchRequest(b, githubJeen, req)
+}
+
 func BenchmarkChi_GithubAll(b *testing.B) {
 	benchRoutes(b, githubChi, githubAPI)
+}
+
+func BenchmarkJeen_GithubAll(b *testing.B) {
+	benchRoutes(b, githubJeen, githubAPI)
 }

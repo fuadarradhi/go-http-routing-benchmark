@@ -56,7 +56,8 @@ var parseAPI = []route{
 }
 
 var (
-	parseChi http.Handler
+	parseChi  http.Handler
+	parseJeen http.Handler
 )
 
 func init() {
@@ -64,6 +65,10 @@ func init() {
 
 	calcMem("Chi", func() {
 		parseChi = loadChi(parseAPI)
+	})
+
+	calcMem("Jeen", func() {
+		parseJeen = loadChi(parseAPI)
 	})
 
 	println()
@@ -74,9 +79,19 @@ func BenchmarkChi_ParseStatic(b *testing.B) {
 	benchRequest(b, parseChi, req)
 }
 
+func BenchmarkJeen_ParseStatic(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/1/users", nil)
+	benchRequest(b, parseJeen, req)
+}
+
 func BenchmarkChi_ParseParam(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/1/classes/go", nil)
 	benchRequest(b, parseChi, req)
+}
+
+func BenchmarkJeen_ParseParam(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/1/classes/go", nil)
+	benchRequest(b, parseJeen, req)
 }
 
 func BenchmarkChi_Parse2Params(b *testing.B) {
@@ -84,6 +99,15 @@ func BenchmarkChi_Parse2Params(b *testing.B) {
 	benchRequest(b, parseChi, req)
 }
 
+func BenchmarkJeen_Parse2Params(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/1/classes/go/123456789", nil)
+	benchRequest(b, parseJeen, req)
+}
+
 func BenchmarkChi_ParseAll(b *testing.B) {
 	benchRoutes(b, parseChi, parseAPI)
+}
+
+func BenchmarkJeen_ParseAll(b *testing.B) {
+	benchRoutes(b, parseJeen, parseAPI)
 }

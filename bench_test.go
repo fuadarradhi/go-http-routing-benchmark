@@ -100,12 +100,26 @@ func BenchmarkChi_Param(b *testing.B) {
 	benchRequest(b, router, r)
 }
 
+func BenchmarkJeen_Param(b *testing.B) {
+	router := loadJeenSingle("GET", "/user/{name}", jeenHandler)
+
+	r, _ := http.NewRequest("GET", "/user/gordon", nil)
+	benchRequest(b, router, r)
+}
+
 // Route with 5 Params (no write)
 const fiveBrace = "/{a}/{b}/{c}/{d}/{e}"
 const fiveRoute = "/test/test/test/test/test"
 
 func BenchmarkChi_Param5(b *testing.B) {
 	router := loadChiSingle("GET", fiveBrace, httpHandlerFunc)
+
+	r, _ := http.NewRequest("GET", fiveRoute, nil)
+	benchRequest(b, router, r)
+}
+
+func BenchmarkJeen_Param5(b *testing.B) {
+	router := loadJeenSingle("GET", fiveBrace, jeenHandler)
 
 	r, _ := http.NewRequest("GET", fiveRoute, nil)
 	benchRequest(b, router, r)
@@ -122,8 +136,22 @@ func BenchmarkChi_Param20(b *testing.B) {
 	benchRequest(b, router, r)
 }
 
+func BenchmarkJeen_Param20(b *testing.B) {
+	router := loadJeenSingle("GET", twentyBrace, jeenHandler)
+
+	r, _ := http.NewRequest("GET", twentyRoute, nil)
+	benchRequest(b, router, r)
+}
+
 func BenchmarkChi_ParamWrite(b *testing.B) {
 	router := loadChiSingle("GET", "/user/{name}", chiHandleWrite)
+
+	r, _ := http.NewRequest("GET", "/user/gordon", nil)
+	benchRequest(b, router, r)
+}
+
+func BenchmarkJeen_ParamWrite(b *testing.B) {
+	router := loadJeenSingle("GET", "/user/{name}", jeenHandlerWrite)
 
 	r, _ := http.NewRequest("GET", "/user/gordon", nil)
 	benchRequest(b, router, r)
