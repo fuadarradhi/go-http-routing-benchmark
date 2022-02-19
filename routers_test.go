@@ -12,34 +12,7 @@ var (
 		name string
 		load func(routes []route) http.Handler
 	}{
-		// {"Ace", loadAce},
-		// {"Bear", loadBear},
-		{"Beego", loadBeego},
-		// {"Bone", loadBone},
 		{"Chi", loadChi},
-		// {"Denco", loadDenco},
-		// {"Echo", loadEcho},
-		{"Gin", loadGin},
-		{"GocraftWeb", loadGocraftWeb},
-		{"Goji", loadGoji},
-		// {"GoJsonRest", loadGoJsonRest},
-		// {"GoRestful", loadGoRestful},
-		{"GorillaMux", loadGorillaMux},
-		{"HttpRouter", loadHttpRouter},
-		// {"HttpTreeMux", loadHttpTreeMux},
-		//{"Kocha", loadKocha},
-		// {"Macaron", loadMacaron},
-		{"Martini", loadMartini},
-		// {"Pat", loadPat},
-		// {"Possum", loadPossum},
-		// {"R2router", loadR2router},
-		// {"Revel", loadRevel},
-		// {"Rivet", loadRivet},
-		// {"Tango", loadTango},
-		// {"TigerTonic", loadTigerTonic},
-		// {"Traffic", loadTraffic},
-		// {"Vulcan", loadVulcan},
-		// {"Zeus", loadZeus},
 	}
 
 	// all APIs

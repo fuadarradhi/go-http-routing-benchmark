@@ -9,7 +9,6 @@ Of course the tested routers can be used for any kind of HTTP request → handle
 
 #### Tested routers & frameworks:
 
- * [Beego](http://beego.me/)
  * [go-json-rest](https://github.com/ant0ine/go-json-rest)
  * [chi](https://github.com/go-chi/chi)
  * [Denco](https://github.com/naoina/denco)
